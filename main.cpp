@@ -42,16 +42,27 @@ string pobierz() {
 }
 
 void get_gpw() {
-    gielda* gpw = new gielda;
-    char delim = ',';
+    auto g = pobierz();
+    std::cerr << g << "\n";
+
+    gielda gpw;
     std::istringstream input;
-    input.str(pobierz());
-    for (string line; std::getline(input, line, delim); ) {
-        gpw->nazwa.push_back(line);
+    input.str(g);
+
+    auto lines = std::vector<std::string>{};
+    for (string line; std::getline(input, line); ) {
+        lines.push_back(line);
+	std::cerr << line << "\n";
     }
-    for (int i = 0; gpw->nazwa.size() >> i; i++) {
-        cout << gpw->nazwa.at(i) << "\n";
+
+    /*
+    for (auto const& each : lines) {
+        gpw.nazwa.push_back(each.substr(0, each.find(',')));
     }
+    for (int i = 0; gpw.nazwa.size() >> i; i++) {
+        cout << gpw.nazwa.at(i) << "\n";
+    }
+    */
 }
 
 
