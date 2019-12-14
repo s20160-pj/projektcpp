@@ -66,23 +66,38 @@ void get_gpw() {
         each = each.substr(nazwa.size() + 1);
         auto data = each.substr(0, each.find(','));
         each = each.substr(data.size() + 1);
-        std::cerr << each << "\n";
+        auto otwarcie = each.substr(0, each.find(','));
+        each = each.substr(otwarcie.size() + 1);
+        auto max = each.substr(0, each.find(','));
+        each = each.substr(max.size() + 1);
+        auto min = each.substr(0, each.find(','));
+        each = each.substr(min.size() + 1);
+        auto aktualny = each.substr(0, each.find(','));
+        each = each.substr(aktualny.size() + 1);
+        auto wolumen_obrotu = each.substr(0, each.find(','));
+        each = each.substr(wolumen_obrotu.size());
+
+        //std::cerr << each << "\n";
         /* gpw.nazwa.push_back(nazwa); */
         /* gpw.data.push_back(data); */
 
         spolka s;
         s.nazwa = nazwa;
         s.data = data;
+        s.otwarcie = stod(otwarcie);
+        s.max = stod(max);
+        s.min = stod(min);
+        s.aktualny = stod(aktualny);
+        s.wolumen_obrotu = stod(wolumen_obrotu);
 
         gpw.spolki[s.nazwa] = s;
     }
 
-    for(auto const& each : gpw.spolki) {
+    for (auto const& each : gpw.spolki) {
         auto const& spolka = each.second;
         cout << spolka.nazwa << "\n";
     }
 }
-
 
 int main() {
     get_gpw();
