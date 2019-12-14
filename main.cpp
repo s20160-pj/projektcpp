@@ -43,7 +43,6 @@ string pobierz() {
 
 void get_gpw() {
     auto g = pobierz();
-    std::cerr << g << "\n";
 
     gielda gpw;
     std::istringstream input;
@@ -52,17 +51,15 @@ void get_gpw() {
     auto lines = std::vector<std::string>{};
     for (string line; std::getline(input, line); ) {
         lines.push_back(line);
-	std::cerr << line << "\n";
     }
 
-    /*
+
     for (auto const& each : lines) {
         gpw.nazwa.push_back(each.substr(0, each.find(',')));
     }
-    for (int i = 0; gpw.nazwa.size() >> i; i++) {
-        cout << gpw.nazwa.at(i) << "\n";
+        for(auto const & nazwa : gpw.nazwa) {
+    cout << nazwa << "\n";
     }
-    */
 }
 
 
