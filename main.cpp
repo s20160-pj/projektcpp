@@ -2,6 +2,7 @@
 #include <string>
 #include <curl/curl.h>
 #include <vector>
+#include <map>
 #include <sstream>
 
 using std::cout;
@@ -10,14 +11,20 @@ using std::string;
 using std::endl;
 using std::vector;
 
+struct spolka {
+    string nazwa;
+    string data;
+    double otwarcie;
+    double max;
+    double min;
+    double aktualny;
+    double wolumen_obrotu;
+
+    using key_type = decltype(nazwa);
+};
+
 struct gielda {
-    vector <string> nazwa;
-    vector <string> data;
-    vector <double> otwarcie;
-    vector <double> max;
-    vector <double> min;
-    vector <double> aktualny;
-    vector <double> wolumen_obrotu;
+    std::map<spolka::key_type, spolka> spolki;
 };
 
 static size_t write(void* prt, size_t size, size_t nmemb, string* data) {
@@ -54,11 +61,25 @@ void get_gpw() {
     }
 
 
-    for (auto const& each : lines) {
-        gpw.nazwa.push_back(each.substr(0, each.find(',')));
+    for (auto each : lines) {
+        auto nazwa = each.substr(0, each.find(','));
+        each = each.substr(nazwa.size() + 1);
+        auto data = each.substr(0, each.find(','));
+        each = each.substr(data.size() + 1);
+        std::cerr << each << "\n";
+        /* gpw.nazwa.push_back(nazwa); */
+        /* gpw.data.push_back(data); */
+
+        spolka s;
+        s.nazwa = nazwa;
+        s.data = data;
+
+        gpw.spolki[s.nazwa] = s;
     }
-        for(auto const & nazwa : gpw.nazwa) {
-    cout << nazwa << "\n";
+
+    for(auto const& each : gpw.spolki) {
+        auto const& spolka = each.second;
+        cout << spolka.nazwa << "\n";
     }
 }
 
