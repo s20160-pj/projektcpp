@@ -1,2 +1,2 @@
 all:
-	g++ -std=c++11 ./main.cpp -o main -lcurl
+	g++ -std=c++11 ./main.cpp -o main -lcurl -lncurses
