@@ -67,7 +67,6 @@ gielda get_gpw() {
 	lines.push_back(line);
 	}
 
-
 	for (auto each : lines) {
 	auto nazwa = each.substr(0, each.find(','));
 	each = each.substr(nazwa.size() + 1);
@@ -83,10 +82,6 @@ gielda get_gpw() {
 	each = each.substr(aktualny.size() + 1);
 	auto wolumen_obrotu = each.substr(0, each.find(','));
 	each = each.substr(wolumen_obrotu.size());
-
-	//std::cerr << each << "\n";
-	/* gpw.nazwa.push_back(nazwa); */
-	/* gpw.data.push_back(data); */
 
 	spolka s;
 	s.nazwa = nazwa;
@@ -114,17 +109,22 @@ void sprawdz_kurs() {
 	clear();
 	nazwa = nazwa_tab;
 	transform(nazwa.begin(), nazwa.end(), nazwa.begin(), ::toupper);
-	spolka s = get_gpw().spolki.at(nazwa);
-	kurs = std::to_string(s.aktualny);
-	size_t pozycja = kurs.find(".");
-	kurs.erase(pozycja + 3, kurs.length() - 1);
-	for (int i = 0; i < kurs.length() ; i++) {
-		kurs_tab[i] = kurs[i];
+	try {
+		spolka s = get_gpw().spolki.at(nazwa);
+		kurs = std::to_string(s.aktualny);
+		//size_t pozycja = kurs.find(".");
+		//kurs.erase(pozycja + 3, kurs.length() - 1);
+		for (int i = 0; i < kurs.length() ; i++) {
+			kurs_tab[i] = kurs[i];
+		}
+		mvprintw(0, 0, "Kurs spolki");
+		mvprintw(1, 0, nazwa_tab);
+		mvprintw(2, 0, "wynosi:");
+		mvprintw(3, 0, kurs_tab);
+		mvprintw(3, 12, "PLN");
+	} catch (std::out_of_range const&) {
+		mvprintw(0, 0, "spolka nie istnieje");
 	}
-	mvprintw(0, 0, "Kurs spolki");
-	mvprintw(1, 0, nazwa_tab);
-	mvprintw(2, 0, "wynosi:");
-	mvprintw(3, 0, kurs_tab);
 }
 	
 void kup() {
@@ -136,16 +136,14 @@ void kup() {
 	getstr(ilosc_tab);
 	clear();
 	mvprintw(0, 0, "Czy na pewno chcesz zakupic akcje? t/n\n");
-	getch(warunek);
-	while ((warunek != "t" && warunek != "T") && (warunek != "n" && warunek != "N")) {
-		getch(warunek);
+	warunek = getch();
+	while ((warunek != 't' && warunek != 'T') && (warunek != 'n' && warunek != 'N')) {
+		warunek = getch();
 	}
-	if (warunek == "t" || warunek == "T") {
+	clear();
 		std::fstream portfel;
-	}
 	
 	//std::ofstream plik("portfel.txt");
-
 }
 
 int main() {
