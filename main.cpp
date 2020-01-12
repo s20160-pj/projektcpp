@@ -42,7 +42,7 @@ static size_t write(void* prt, size_t size, size_t nmemb, string* data) {
 string pobierz() {
 	string response;
 	auto curl = curl_easy_init();
-	curl_easy_setopt(curl, CURLOPT_URL, "https://info.bossa.pl/pub/ciagle/mstock/sesjacgl/sesjacgl.prn");
+	curl_easy_setopt(curl, CURLOPT_URL, "https://info.bossa.pl/pub/metastock/mstock/sesjaall/sesjaall.prn");
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
 	curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
 
@@ -126,6 +126,11 @@ void sprawdz_kurs() {
 		mvprintw(0, 0, "spolka nie istnieje");
 	}
 }
+
+bool czy_plik_istnieje(const char *fileName) {
+	std::ifstream infile(fileName);
+	return infile.good();
+}
 	
 void kup() {
 	char ilosc_tab[20];
@@ -141,9 +146,11 @@ void kup() {
 		warunek = getch();
 	}
 	clear();
-		std::fstream portfel;
+	if (!czy_plik_istnieje("portfel.txt")) {
+		std::ofstream plik("portfel.txt");
+	}
 	
-	//std::ofstream plik("portfel.txt");
+	
 }
 
 int main() {
